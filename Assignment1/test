@@ -1,15 +1,13 @@
-# Prompt for hostname, local IP address, and DNS server addresses
+# variables
 Add-Type -AssemblyName Microsoft.VisualBasic
-$hostname = [Microsoft.VisualBasic.Interaction]::InputBox("Enter the hostname for this server (e.g. DC01)", "Hostname")
+$hostname = [Microsoft.VisualBasic.Interaction]::InputBox("Enter the hostname", "Hostname")
 $dnsServers = "8.8.8.8,8.8.4.4"
 $adapterName = "Ethernet0"
 
-# Convert comma-separated list to array
-$dnsServers = $dnsServers -split ","
 
 try {
     # Set local IP address
-    Write-Host "Setting local IP address to $localIP ..."
+    Write-Host "Setting local IP address"
     try {
         # Delete the existing IP address configuration
         Remove-NetIPAddress -InterfaceAlias $adapterName -Confirm:$false
@@ -21,7 +19,7 @@ try {
         Start-Sleep -Seconds 5
 
         # Set a new IP address configuration (replace with your own values)
-        New-NetIPAddress -InterfaceAlias $adapterName -IPAddress 192.168.1.100 -PrefixLength 24 -DefaultGateway 192.168.1.1
+        New-NetIPAddress -InterfaceAlias $adapterName -IPAddress 192.168.1.2 -PrefixLength 24 -DefaultGateway 192.168.1.1
 
     }
     catch {
